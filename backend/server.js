@@ -21,6 +21,10 @@ app.get('/api', (req, res) => {
   res.json({ time: Date().toString() });
 });
 
+app.get('/veera', (req, res) => {
+  res.json({ time: Date().toString() });
+});
+
 //port
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
