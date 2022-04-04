@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import {} from 'dotenv/config';
+//Bring Routes
+import blogRoutes from './routes/blog.js';
 
 //app
 const app = express();
@@ -24,11 +26,13 @@ app.use(cookieParser());
 if (process.env.NODE_ENV == 'development') {
   app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
 }
+// routes middleware
+app.use('/api', blogRoutes);
 
 //routes
-app.get('/api', (req, res) => {
-  res.json({ time: Date().toString() });
-});
+// app.get('/api', (req, res) => {
+//   res.json({ time: Date().toString() });
+// });                                       // Instead of typing Logic Here, I have moved my Logic to separate routes and Here I am using as a middleware
 
 //port
 const port = process.env.PORT || 8000;
