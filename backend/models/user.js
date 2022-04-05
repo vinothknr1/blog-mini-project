@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      max: true,
+      max: 32,
       unique: true,
       index: true,
       lowercase: true,
@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      max: true,
+      max: 32,
     },
     email: {
       type: String,
@@ -31,21 +31,19 @@ const userSchema = mongoose.Schema(
     },
     hashed_password: {
       type: String,
-      required: true,
+      required: false,
     },
-    salt: {
-      salt: Number,
-      about: {
-        type: String,
-      },
-      role: {
-        type: Number,
-        trim: true,
-      },
-      photo: {
-        data: Buffer,
-        contentType: String,
-      },
+    salt: String,
+    about: {
+      type: String,
+    },
+    role: {
+      type: Number,
+      trim: true,
+    },
+    photo: {
+      data: Buffer,
+      contentType: String,
     },
     resetPasswordLink: {
       data: String,
@@ -56,6 +54,28 @@ const userSchema = mongoose.Schema(
 );
 
 const User = mongoose.model('User', userSchema);
+
+userSchema.methods = {
+  authenticate: function (plainText) {
+    return this.encryptPassword(plainText) === this.hashed_password;
+  },
+
+  encryptPassword: function (password) {
+    if (!password) return '';
+    try {
+      return crypto
+        .createHmac('sha1', this.salt)
+        .update(password)
+        .digest('hex');
+    } catch (err) {
+      return '';
+    }
+  },
+
+  makeSalt: function () {
+    return Math.round(new Date().valueOf() * Math.random()) + '';
+  },
+};
 
 //Export Sattement
 export default User;
