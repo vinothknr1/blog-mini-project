@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import {} from 'dotenv/config';
 //Bring Routes
 import blogRoutes from './routes/blog.js';
+import authRoutes from './routes/auth.js';
 
 //app
 const app = express();
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV == 'development') {
 }
 // routes middleware
 app.use('/api', blogRoutes);
+app.use('/api', authRoutes);
 
 //routes
 // app.get('/api', (req, res) => {
