@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import crypto from 'crypto';
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema(
     },
     hashed_password: {
       type: String,
-      required: false,
+      required: true,
     },
     salt: String,
     about: {
@@ -53,7 +53,19 @@ const userSchema = mongoose.Schema(
   { timestamp: true }
 );
 
-const User = mongoose.model('User', userSchema);
+userSchema
+  .virtual('password')
+  .set(function (password) {
+    // create a temporarity variable called _password
+    this._password = password;
+    // generate salt
+    this.salt = this.makeSalt();
+    // encryptPassword
+    this.hashed_password = this.encryptPassword(password);
+  })
+  .get(function () {
+    return this._password;
+  });
 
 userSchema.methods = {
   authenticate: function (plainText) {
@@ -77,5 +89,7 @@ userSchema.methods = {
   },
 };
 
-//Export Sattement
+const User = mongoose.model('User', userSchema);
+
+//Export Statement
 export default User;
