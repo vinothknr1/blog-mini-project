@@ -59,3 +59,16 @@ export const signin = (req, res) => {
     });
   });
 };
+
+export const signout = (req, res) => {
+  res.clearCookie('token');
+  res.json({
+    message: 'Signout Success',
+  });
+};
+
+export const requireSignin = expressJwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ['HS256'],
+  userProperty: 'auth',
+});

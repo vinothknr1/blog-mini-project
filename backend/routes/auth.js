@@ -1,7 +1,7 @@
 //Import
 import express from 'express';
 const router = express.Router();
-import { signup, signin } from '../controllers/auth.js';
+import { signup, signin, signout, requireSignin } from '../controllers/auth.js';
 
 //validators
 import { runValidation } from '../validators/index.js';
@@ -13,5 +13,13 @@ import {
 //Handling Routes
 router.post('/signup', userSignupValidator, runValidation, signup);
 router.post('/signin', userSigninValidator, runValidation, signin);
+router.get('/signout', signout);
+
+//test
+router.get('/secret', requireSignin, (req, res) => {
+  res.json({
+    message: 'You have access to this secret page',
+  });
+});
 
 export default router;
