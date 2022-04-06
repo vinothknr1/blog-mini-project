@@ -17,8 +17,6 @@ app.use(cookieParser());
 if(process.env.NODE_ENV = 'development' ){
   app.use(cors({ origin:`${process.env.CLIENT_URL}`}));
 }
-
-
 //routes
 app.get('/api', (req, res) => {
   res.json({ time: Date().toString() });
