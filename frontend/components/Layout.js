@@ -1,13 +1,14 @@
-import Header from './Header';
 import React from 'react';
-const Layout1 = ({children}) => {
-    return(
-        <React.Fragment> 
-            <Header/> 
-            {children}
-            <p>footer</p>
-            </React.Fragment>
-    );
+import Header from './Header';
+
+const Layout = ({ children }) => {
+  return (
+    <React.Fragment>
+      <Header />
+      {children}
+      <p>footer</p>
+    </React.Fragment>
+  );
 };
 
-export default Layout1;
+export default Layout;
