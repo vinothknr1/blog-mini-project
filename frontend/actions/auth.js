@@ -1,5 +1,5 @@
 import fetch from "isomorphic-fetch";
-import {API} from '../config.js';
+import {API} from "../config.js";
 import Signup from "../pages/signup.js";
 import cookie from "js-cookie";
 

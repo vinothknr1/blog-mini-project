@@ -25,7 +25,7 @@ export function signup(req, res) {
       //   user: success,
       //  });
       res.json({
-        message: 'Signup Sucess! Please Signin',
+        message: 'Signup Success! Please Signin',
       });
     });
   });
