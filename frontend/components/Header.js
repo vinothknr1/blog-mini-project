@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { APP_NAME } from '../config';
@@ -50,26 +51,27 @@ const Header = () => {
               </React.Fragment>
             )}
 
+{isAuth() && isAuth().role === 0 && (
+              <NavItem>
+                <Link href="/user">
+                  <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
+                </Link>
+              </NavItem>
+            )}
+
+            {isAuth() && isAuth().role === 1 && (
+              <NavItem>
+                <Link href="/admin">
+                  <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
+                </Link>
+              </NavItem>
+            )}
+
             {isAuth() && (
               <NavItem>
-                <NavLink
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => signout(() => Router.replace(`/signin`))}
-                >
+                <NavLink style={{ cursor: 'pointer' }} onClick={() => signout(() => Router.replace(`/signin`))}>
                   Signout
                 </NavLink>
-              </NavItem>
-            )}
-
-            {isAuth() && isAuth.role === 0 && (
-              <NavItem>
-                <Link href='/user'>{`${isAuth.name}'s Dashboard`}</Link>
-              </NavItem>
-            )}
-
-            {isAuth() && isAuth.role === 1 && (
-              <NavItem>
-                <Link href='/admin'>{`${isAuth.name}'s Dashboard`}</Link>
               </NavItem>
             )}
           </Nav>
