@@ -19,10 +19,9 @@ import {
   DropdownItem,
 } from 'reactstrap';
 
-
-Router.onRouteChangeStart = url => NProgress.start();
-Router.onRouteChangeComplete = url => NProgress.done();
-Router.onRouteChangeError = url => NProgress.done();
+Router.onRouteChangeStart = (url) => NProgress.start();
+Router.onRouteChangeComplete = (url) => NProgress.done();
+Router.onRouteChangeError = (url) => NProgress.done();
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,9 +56,9 @@ const Header = () => {
               </React.Fragment>
             )}
 
-{isAuth() && isAuth().role === 0 && (
+            {isAuth() && isAuth().role === 0 && (
               <NavItem>
-                <Link href="/user">
+                <Link href='/user'>
                   <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
                 </Link>
               </NavItem>
@@ -67,7 +66,7 @@ const Header = () => {
 
             {isAuth() && isAuth().role === 1 && (
               <NavItem>
-                <Link href="/admin">
+                <Link href='/admin'>
                   <NavLink>{`${isAuth().name}'s Dashboard`}</NavLink>
                 </Link>
               </NavItem>
@@ -75,7 +74,10 @@ const Header = () => {
 
             {isAuth() && (
               <NavItem>
-                <NavLink style={{ cursor: 'pointer' }} onClick={() => signout(() => Router.replace(`/signin`))}>
+                <NavLink
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => signout(() => Router.replace(`/signin`))}
+                >
                   Signout
                 </NavLink>
               </NavItem>
