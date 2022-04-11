@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Schema;
 
-const blogSchema = new Schema(
+const blogSchema = new mongoose.Schema(
   {
     title: {
       type: String,
