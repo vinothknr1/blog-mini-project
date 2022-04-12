@@ -7,6 +7,6 @@ import { requireSignin, adminMiddleware } from '../controllers/auth.js';
 const router = express.Router();
 
 //Handling Routes
-router.get('/blog', requireSignin, adminMiddleware, create);
+router.post('/blog', requireSignin, adminMiddleware, create);
 
 export default router;
