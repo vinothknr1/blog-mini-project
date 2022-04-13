@@ -7,8 +7,9 @@ import { stripHtml } from 'string-strip-html';
 import _ from 'lodash';
 import errorHandler from '../helpers/dbErrorHandler.js';
 import fs, { readFileSync } from 'fs';
+import { smartTrim } from '../helpers/blog.js';
 
-export function create(req, res) {
+export const create = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {
@@ -47,9 +48,10 @@ export function create(req, res) {
     let blog = new Blog();
     blog.title = title;
     blog.body = body;
+    blog.excerpt = smartTrim(body, 320, '', ' ...');
     blog.slug = slugify(title).toLowerCase();
     blog.mtitle = `${title} | ${process.env.APP_NAME}`;
-    blog.mdesc = stripHtml(body.substring(0, 160));
+    blog.mdesc = stripHtml(body.substring(0, 160)).result;
     blog.postedBy = req.user._id;
     // categories and tags
     let arrayOfCategories = categories && categories.split(',');
@@ -72,17 +74,17 @@ export function create(req, res) {
         });
       }
       // res.json(result);
-      findByIdAndUpdate(
+      Blog.findByIdAndUpdate(
         result._id,
         { $push: { categories: arrayOfCategories } },
         { new: true }
       ).exec((err, result) => {
         if (err) {
           return res.status(400).json({
-            error: errorHandler(err),
+            error: err,
           });
         } else {
-          findByIdAndUpdate(
+          Blog.findByIdAndUpdate(
             result._id,
             { $push: { tags: arrayOfTags } },
             { new: true }
@@ -99,4 +101,4 @@ export function create(req, res) {
       });
     });
   });
-}
+};
