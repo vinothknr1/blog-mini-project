@@ -1,5 +1,10 @@
-export const publicRuntimeConfig = {
-    APP_NAME: 'SEO BLOG',
+const withCSS = require('@zeit/next-css');
+
+module.exports = withCSS({
+  PublicRuntimeConfig: {
+    APP_NAME: 'LSUE',
     API_DEVELOPMENT: 'http://localhost:8000/api',
-    PRODUCTION: false
-};
+    API_PRODUCTION: 'https://seoblog.com/api',
+    PRODUCTION: false,
+  },
+});
