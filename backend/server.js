@@ -1,46 +1,46 @@
 //Imports
-import express from 'express';
-import morgan from 'morgan';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import {} from 'dotenv/config';
+import express from "express";
+import morgan from "morgan";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import mongoose from "mongoose";
+import {} from "dotenv/config";
 //Bring Routes
-import blogRoutes from './routes/blog.js';
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/user.js';
-import categoryRoutes from './routes/category.js';
-import tagRoutes from './routes/tag.js';
+import blogRoutes from "./routes/blog.js";
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/user.js";
+import categoryRoutes from "./routes/category.js";
+import tagRoutes from "./routes/tag.js";
 //app
 const app = express();
 
 //db
 mongoose
-  .connect(process.env.DATABASE_LOCAL, {})
-  .then(() => console.log('Database Connected'))
-  .catch((err) => console.log('DB Error =>', err));
+  .connect(process.env.DATABASE_CLOUD, {})
+  .then(() => console.log("Database Connected"))
+  .catch((err) => console.log("DB Error =>", err));
 
 // middlewares
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 //cors
-if ((process.env.NODE_ENV = 'development')) {
+if ((process.env.NODE_ENV = "development")) {
   app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
 }
 
 //cors
-if (process.env.NODE_ENV == 'development') {
+if (process.env.NODE_ENV == "development") {
   app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
 }
 // routes middleware
-app.use('/api', blogRoutes);
-app.use('/api', authRoutes);
-app.use('/api', userRoutes);
-app.use('/api', categoryRoutes);
-app.use('/api', tagRoutes);
+app.use("/api", blogRoutes);
+app.use("/api", authRoutes);
+app.use("/api", userRoutes);
+app.use("/api", categoryRoutes);
+app.use("/api", tagRoutes);
 
 //routes
 // app.get('/api', (req, res) => {
