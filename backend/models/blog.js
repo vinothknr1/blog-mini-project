@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const ObjectId = mongoose.Schema.ObjectId;
 
 const blogSchema = new mongoose.Schema(
@@ -35,17 +35,17 @@ const blogSchema = new mongoose.Schema(
       data: Buffer,
       contentType: String,
     },
-    categories: [{ type: ObjectId, ref: 'Category', required: true }],
-    tags: [{ type: ObjectId, ref: 'Tag', required: true }],
+    categories: [{ type: ObjectId, ref: "Category", required: true }],
+    tags: [{ type: ObjectId, ref: "Tag", required: true }],
     postedBy: {
       type: ObjectId,
-      ref: 'User',
+      ref: "User",
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
-const Blog = mongoose.model('Blog', blogSchema);
+const Blog = mongoose.model("Blog", blogSchema);
 
 //Export Statement
 export default Blog;
